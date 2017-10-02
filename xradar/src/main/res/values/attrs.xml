@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="XRadarView">
+        <attr name="count" format="integer"/>
+        <attr name="layerCount" format="integer" />
+        <attr name="mDrawableSize" format="dimension|reference" />
+        <attr name="mDrawablePadding" format="dimension|reference" />
+        <attr name="descPadding" format="dimension|reference" />
+        <attr name="titleSize" format="dimension|reference"/>
+        <attr name="dataSize" format="dimension|reference" />
+        <attr name="radarPercent" format="float"/>
+        <attr name="startColor" format="color|reference" />
+        <attr name="endColor" format="color|reference" />
+        <attr name="cobwebColor" format="color|reference" />
+        <attr name="lineColor" format="color|reference" />
+        <attr name="dataColor" format="color|reference" />
+        <attr name="singleColor" format="color|reference" />
+        <attr name="titleColor" format="color|reference" />
+        <attr name="pointColor" format="color|reference" />
+        <attr name="borderColor" format="color|reference" />
+        <attr name="radiusColor" format="color|reference" />
+        <attr name="borderWidth" format="dimension|reference" />
+        <attr name="pointRadius" format="dimension|reference" />
+        <attr name="enabledBorder" format="boolean"/>
+        <attr name="enabledAnimation" format="boolean"/>
+        <attr name="enabledShowPoint" format="boolean"/>
+        <attr name="enabledPolygon" format="boolean"/>
+        <attr name="enabledShade" format="boolean"/>
+        <attr name="enabledRadius" format="boolean"/>
+        <attr name="enabledText" format="boolean"/>
+        <attr name="animDuration" format="integer"/>
+    </declare-styleable>
+</resources>
