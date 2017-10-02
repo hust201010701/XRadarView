@@ -4,7 +4,7 @@
 XRadarView 支持高度自定义，其可调整属性及含义如下表所示。
 （稍后补充）
 
-Demo中展示的XRadarView的全面功能：
+Demo中展示的XRadarView的全面功能([Gif原图](http://7bvaky.com2.z0.glb.qiniucdn.com/2017-10-02_22_34_35_xradar.gif))：
 
 ![](http://7bvaky.com2.z0.glb.qiniucdn.com/2017-10-02_22_34_35_xradar.gif)
 
