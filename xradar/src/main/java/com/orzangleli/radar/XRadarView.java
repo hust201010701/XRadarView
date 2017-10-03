@@ -58,7 +58,7 @@ public class XRadarView extends View {
     private int lineColor;
     // 数据值文本颜色
     private int dataColor;
-    // 如果不是渐变环，是单一的颜色
+    // 如果不是多色区域，是单一的颜色
     private int singleColor;
 
     // 标题文本颜色
@@ -226,6 +226,7 @@ public class XRadarView extends View {
         borderPaint.setAntiAlias(true);
         borderPaint.setColor(borderColor);
         borderPaint.setStrokeWidth(borderWidth);
+
 
         loadAnimation(enabledAnimation);
 
@@ -770,6 +771,7 @@ public class XRadarView extends View {
 
     public void setCobwebColor(int cobwebColor) {
         this.cobwebColor = cobwebColor;
+        cobwebPaint.setColor(cobwebColor);
         invalidate();
     }
 
@@ -779,6 +781,7 @@ public class XRadarView extends View {
 
     public void setLineColor(int lineColor) {
         this.lineColor = lineColor;
+        linePaint.setColor(lineColor);
         invalidate();
     }
 
@@ -788,6 +791,7 @@ public class XRadarView extends View {
 
     public void setDataColor(int dataColor) {
         this.dataColor = dataColor;
+        dataPaint.setColor(dataColor);
         invalidate();
     }
 
@@ -797,6 +801,7 @@ public class XRadarView extends View {
 
     public void setTitleColor(int titleColor) {
         this.titleColor = titleColor;
+        titlePaint.setColor(titleColor);
         invalidate();
     }
 
@@ -806,6 +811,7 @@ public class XRadarView extends View {
 
     public void setPointColor(int pointColor) {
         this.pointColor = pointColor;
+        pointPaint.setColor(pointColor);
         invalidate();
     }
 
@@ -833,6 +839,8 @@ public class XRadarView extends View {
 
     public void setBorderColor(int borderColor) {
         this.borderColor = borderColor;
+        borderPaint.setColor(borderColor);
+        invalidate();
     }
 
     public int getBorderWidth() {
@@ -885,5 +893,7 @@ public class XRadarView extends View {
 
     public void setSingleColor(int singleColor) {
         this.singleColor = singleColor;
+        singlePaint.setColor(singleColor);
+        invalidate();
     }
 }
