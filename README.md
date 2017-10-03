@@ -63,15 +63,20 @@ Demo中展示的XRadarView的全面功能(gif很大，github显示不完整，�
 
 如果您有其它效果的雷达图，可以提交Issues[欢迎提交各种雷达图样式效果图](https://github.com/hust201010701/XRadarView/issues/1)，我会实现好之后贴出来。
 
-# Add Library
-
+# 如何使用
 [ ![Download](https://api.bintray.com/packages/orzangleli/maven/xradar/images/download.svg) ](https://bintray.com/orzangleli/maven/xradar/_latestVersion)
 
-XRadarView is installed by adding the following dependency to your build.gradle file:
+XRadarView 添加以下依赖到项目的 build.gradle 文件:
 
     compile 'com.orzangleli:xradar:1.0.3'
 
 Enjoy it!:smile:
+
+## 技术剖析
+
+本项目的技术剖析将从开发到发布库的整个过程进行详细描述，具体文章请关注微信公众号获取最新文章。
+
+![](http://7bvaky.com2.z0.glb.qiniucdn.com/2017-10-03_15_58_46_qrcode_for_gh_d251874cf21a_430.jpg)
 
 # License
 
