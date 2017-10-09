@@ -43,9 +43,11 @@ XRadarView 支持高度自定义，其可调整属性及含义如下表所示。
 |values|值的文本数组|
 |colors|多色区域时，每个区域的颜色数组（数组长度可以小于count）|
 
-Demo中展示的XRadarView的全面功能(gif很大，github显示不完整，建议查看[Gif原图](http://7bvaky.com2.z0.glb.qiniucdn.com/2017-10-02_22_34_35_xradar.gif))：
+Demo中展示的XRadarView的全面功能(gif很大，github显示不完整已分割成3个Gif，建议查看[Gif原图](http://7bvaky.com2.z0.glb.qiniucdn.com/2017-10-02_22_34_35_xradar.gif))：
 
-![](http://7bvaky.com2.z0.glb.qiniucdn.com/2017-10-02_22_34_35_xradar.gif)
+![](https://mmbiz.qpic.cn/mmbiz_gif/E7WNiczNxd5zv2Kzkb42oW3Bic4FB9bmLibohZIl4pvk8HKhy2nAnJjic5BVUZwtry2rekAQpAEDVD5rVqb88Yj1lA/0?wx_fmt=gif&tp=webp&wxfrom=5&wx_lazy=1)
+![](https://mmbiz.qpic.cn/mmbiz_gif/E7WNiczNxd5zv2Kzkb42oW3Bic4FB9bmLibgsnYHcF0zP9gwFl3P9S2wQk8cS83Sy3eSQhm5GOIj8IbKOB6k5pRyg/0?wx_fmt=gif&tp=webp&wxfrom=5&wx_lazy=1)
+![](https://mmbiz.qpic.cn/mmbiz_gif/E7WNiczNxd5zv2Kzkb42oW3Bic4FB9bmLibicqjgOibnP05fygstVuUFxzmldf8Bib3A9IQJHhibXBY9eoS1GOmGia6G3A/0?wx_fmt=gif&tp=webp&wxfrom=5&wx_lazy=1)
 
 你也可以下载本项目的apk体验：
 
