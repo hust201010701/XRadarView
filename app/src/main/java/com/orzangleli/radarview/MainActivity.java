@@ -2,7 +2,10 @@ package com.orzangleli.radarview;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.LinearGradient;
 import android.graphics.Rect;
+import android.graphics.RectF;
+import android.graphics.Shader;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.SpannableString;
@@ -125,6 +128,16 @@ public class MainActivity extends AppCompatActivity implements CompoundButton.On
         // 无渐变色的单一色
         radarView.setSingleColor(Color.parseColor("#800000ff"));
 
+        radarView.post(new Runnable() {
+            @Override
+            public void run() {
+                RectF rect = radarView.getPathRect();
+                // 设置渐变shader
+                radarView.setRegionShader(new LinearGradient(rect.left,rect.top,rect.right
+                        ,rect.bottom,new int[]{Color.YELLOW,Color.RED},new float[]{0.2f,0.7f}, Shader.TileMode.CLAMP));
+            }
+        });
+
         // 雷达图标题和图标的点击事件
         radarView.setOnTitleClickListener(new XRadarView.OnTitleClickListener() {
             @Override
@@ -220,6 +233,7 @@ public class MainActivity extends AppCompatActivity implements CompoundButton.On
         });
 
     }
+
 
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
