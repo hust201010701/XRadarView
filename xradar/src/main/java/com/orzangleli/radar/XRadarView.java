@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.LinearGradient;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Path;
@@ -75,6 +76,10 @@ public class XRadarView extends View {
     private int borderWidth;
     // 半径线的颜色
     private int radiusColor;
+    // 雷达图渐变颜色数组
+    private int[] shaderColors;
+    // 雷达图渐变颜色各种颜色分布的位置
+    private float[] shaderPositions;
 
 
     // 是否画边界线
@@ -93,6 +98,8 @@ public class XRadarView extends View {
     private boolean enabledRadius = true;
     // 是否绘制文本
     private boolean enabledText = true;
+    // 是否将雷达区域绘制成渐变色
+    private boolean enabledRegionShader = false;
 
 
     private int MAX_TEXT_WIDTH;  // 文字最大允许宽度
@@ -106,8 +113,8 @@ public class XRadarView extends View {
     // 半径
     private float radius;
 
-    // 是否是圆形
-    private boolean isCircle = true;
+    // 外轮廓是否是圆形
+    private boolean isCircle = false;
 
     // 区域渐变shader
     private Shader regionShader;
@@ -138,7 +145,6 @@ public class XRadarView extends View {
     CharSequence values[];
     // 区域颜色
     int colors[];
-
 
     public XRadarView(Context context) {
         this(context, null, 0);
@@ -267,6 +273,13 @@ public class XRadarView extends View {
         setMeasuredDimension(Math.min(wSpecSize, hSpecSize), Math.min(wSpecSize, hSpecSize));
     }
 
+    @Override
+    protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
+        super.onLayout(changed, left, top, right, bottom);
+        if (regionShader == null && shaderColors != null) {
+            regionShader = new LinearGradient(getLeft(), getTop(), getRight(), getBottom(), shaderColors, shaderPositions, Shader.TileMode.CLAMP);
+        }
+    }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
@@ -287,7 +300,7 @@ public class XRadarView extends View {
             drawText(canvas);
         }
         if (colors == null || colors.length == 0) {
-            drawRegion(canvas, regionShader, currentScale);
+            drawRegion(canvas, currentScale);
         } else {
             drawRegionWithColor(canvas, currentScale);
         }
@@ -488,11 +501,13 @@ public class XRadarView extends View {
     }
 
     // 用一种颜色画区域
-    private void drawRegion(Canvas canvas, Shader regionShader, float scale) {
+    private void drawRegion(Canvas canvas, float scale) {
         canvas.save();
         singlePaint.setColor(singleColor);
-        if (regionShader != null) {
+        if (enabledRegionShader) {
             singlePaint.setShader(regionShader);
+        } else {
+            singlePaint.setShader(null);
         }
         List<Point> list = new ArrayList<>();
         for (int i = 0; i < count; i++) {
@@ -883,6 +898,19 @@ public class XRadarView extends View {
         invalidate();
     }
 
+    public int[] getColors() {
+        return colors;
+    }
+
+    public boolean isCircle() {
+        return isCircle;
+    }
+
+    public void setCircle(boolean circle) {
+        isCircle = circle;
+        invalidate();
+    }
+
     public boolean isEnabledShade() {
         return enabledShade;
     }
@@ -920,12 +948,16 @@ public class XRadarView extends View {
         invalidate();
     }
 
-    public Shader getRegionShader() {
-        return regionShader;
+    public void setRegionShaderConfig(int colors[], float positions[]) {
+        this.shaderColors = colors;
+        this.shaderPositions = positions;
+        requestLayout();
+        invalidate();
     }
 
-    public void setRegionShader(Shader regionShader) {
-        this.regionShader = regionShader;
+    public void setEnabledRegionShader(boolean enabled) {
+        this.enabledRegionShader = enabled;
+        requestLayout();
         invalidate();
     }
 

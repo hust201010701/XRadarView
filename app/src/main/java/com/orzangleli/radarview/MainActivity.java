@@ -2,10 +2,7 @@ package com.orzangleli.radarview;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.LinearGradient;
 import android.graphics.Rect;
-import android.graphics.RectF;
-import android.graphics.Shader;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.SpannableString;
@@ -29,7 +26,7 @@ public class MainActivity extends AppCompatActivity implements CompoundButton.On
     XRadarView radarView;
     TextView countTextView,layerCountTextView;
     SeekBar seekBar,seekBar2,seekBar3,seekBar4;
-    ToggleButton drawBorder, drawPoint, drawPolygon, drawShade, drawMultiColor, drawRadius, drawText, drawIcon, drawRichText;
+    ToggleButton drawBorder, drawPoint, drawPolygon, drawShade, drawMultiColor, regionSupportShader, regionCircle, drawRadius, drawText, drawIcon, drawRichText;
     Button loadAnimation;
 
     // 图标
@@ -70,6 +67,8 @@ public class MainActivity extends AppCompatActivity implements CompoundButton.On
         drawPolygon = (ToggleButton) this.findViewById(R.id.drawPolygon);
         drawShade = (ToggleButton) this.findViewById(R.id.drawShade);
         drawMultiColor = (ToggleButton) this.findViewById(R.id.drawMultiColor);
+        regionSupportShader = (ToggleButton) this.findViewById(R.id.regionSupportShader);
+        regionCircle = (ToggleButton) this.findViewById(R.id.regionCircle);
         drawRadius = (ToggleButton) this.findViewById(R.id.drawRadius);
         drawText = (ToggleButton) this.findViewById(R.id.drawText);
         drawIcon = (ToggleButton) this.findViewById(R.id.drawIcon);
@@ -80,10 +79,13 @@ public class MainActivity extends AppCompatActivity implements CompoundButton.On
         drawPolygon.setOnCheckedChangeListener(this);
         drawShade.setOnCheckedChangeListener(this);
         drawMultiColor.setOnCheckedChangeListener(this);
+        regionSupportShader.setOnCheckedChangeListener(this);
+        regionCircle.setOnCheckedChangeListener(this);
         drawRadius.setOnCheckedChangeListener(this);
         drawText.setOnCheckedChangeListener(this);
         drawIcon.setOnCheckedChangeListener(this);
         drawRichText.setOnCheckedChangeListener(this);
+
 
         loadAnimation.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,8 +102,8 @@ public class MainActivity extends AppCompatActivity implements CompoundButton.On
         radarView.setPercents(percents);
         // 设置各区域颜色的数组
         // 如果设置了colors则会每个区域显示不同的颜色，否则所有区域显示同一个颜色   操作1
-        radarView.setColors(colors);
-        // 如果没有想设置所有区域同一种颜色，可以设置dataColor                    操作2    （操作1和操作2 互斥）
+        radarView.setColors(null);
+        // 如果想设置所有区域同一种颜色，可以设置dataColor                    操作2    （操作1和操作2 互斥）
 //        radarView.setDataColor(Color.parseColor("#999900"));
         // 设置各项标题
         radarView.setTitles(titles);
@@ -127,16 +129,8 @@ public class MainActivity extends AppCompatActivity implements CompoundButton.On
         radarView.setLayerCount(5);
         // 无渐变色的单一色
         radarView.setSingleColor(Color.parseColor("#800000ff"));
-
-        radarView.post(new Runnable() {
-            @Override
-            public void run() {
-                RectF rect = radarView.getPathRect();
-                // 设置渐变shader
-                radarView.setRegionShader(new LinearGradient(rect.left,rect.top,rect.right
-                        ,rect.bottom,new int[]{Color.YELLOW,Color.RED},new float[]{0.2f,0.7f}, Shader.TileMode.CLAMP));
-            }
-        });
+        // 配置区域渐变, 第二个参数需要微调才能获得好的结果
+        radarView.setRegionShaderConfig(new int[]{Color.YELLOW, Color.RED}, new float[]{0.2f, 0.6f});
 
         // 雷达图标题和图标的点击事件
         radarView.setOnTitleClickListener(new XRadarView.OnTitleClickListener() {
@@ -257,6 +251,16 @@ public class MainActivity extends AppCompatActivity implements CompoundButton.On
                     radarView.setColors(null);
                 }
                 break;
+            case R.id.regionSupportShader:
+                if (isChecked && radarView.getColors() != null) {
+                    Toast.makeText(this, "开启区域颜色渐变，需要先关闭多色区分区域", Toast.LENGTH_LONG).show();
+                    return;
+                }
+                radarView.setEnabledRegionShader(isChecked);
+                break;
+            case R.id.regionCircle:
+                radarView.setCircle(isChecked);
+                break;
             case R.id.drawRadius:
                 radarView.setEnabledRadius(isChecked);
                 break;
@@ -265,8 +269,10 @@ public class MainActivity extends AppCompatActivity implements CompoundButton.On
                 break;
             case R.id.drawIcon:
                 if (isChecked) {
+                    radarView.setEnabledRegionShader(false);
                     radarView.setDrawables(drawables);
                 } else {
+                    radarView.setEnabledRegionShader(true);
                     radarView.setDrawables(null);
                 }
                 break;
