@@ -81,7 +81,7 @@ Demo中展示的XRadarView的全面功能(gif很大，github显示不完整已�
 
 XRadarView 添加以下依赖到项目的 build.gradle 文件:
 
-    compile 'com.orzangleli:xradar:1.0.3'
+    compile 'com.orzangleli:xradar:1.0.4'
 
 Enjoy it!:smile:
 
