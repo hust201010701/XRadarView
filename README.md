@@ -2,7 +2,16 @@
 :bus: XRadarView is a "A highly customizable radar view for Android". XRadarView 是一个可高度自定义的雷达图控件。
 
 Lastest Version:      
-[ ![Download](https://api.bintray.com/packages/orzangleli/maven/xradar/images/download.svg?version=1.0.3) ](https://bintray.com/orzangleli/maven/xradar/1.0.3/link)
+[ ![Download](https://api.bintray.com/packages/orzangleli/maven/xradar/images/download.svg?version=1.0.4) ](https://bintray.com/orzangleli/maven/xradar/1.0.4/link)
+
+## 更新日志
+
+### 1.0.4 更新内容
+1. 支持圆形轮廓
+2. 支持区域颜色渐变
+以上更新感谢 [leixiong033](https://github.com/leixiong033)、[wl386123298](https://github.com/wl386123298) 提出的[issue](https://github.com/hust201010701/XRadarView/issues/1) .
+
+----
 
 ## 属性含义
 
@@ -42,6 +51,8 @@ XRadarView 支持高度自定义，其可调整属性及含义如下表所示。
 |percents|各项的值数组（转换成0-1之间的数值）|
 |values|值的文本数组|
 |colors|多色区域时，每个区域的颜色数组（数组长度可以小于count）|
+|enabledRegionShader|是否允许区域颜色渐变|
+|isCircle|区域轮廓是否为圆形|
 
 Demo中展示的XRadarView的全面功能(gif很大，github显示不完整已分割成3个Gif，建议查看[Gif原图](http://7bvaky.com2.z0.glb.qiniucdn.com/2017-10-02_22_34_35_xradar.gif))：
 
