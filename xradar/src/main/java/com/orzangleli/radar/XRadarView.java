@@ -7,11 +7,14 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.LinearGradient;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
 import android.graphics.Rect;
+import android.graphics.RectF;
+import android.graphics.Shader;
 import android.os.Build;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
@@ -73,6 +76,10 @@ public class XRadarView extends View {
     private int borderWidth;
     // 半径线的颜色
     private int radiusColor;
+    // 雷达图渐变颜色数组
+    private int[] shaderColors;
+    // 雷达图渐变颜色各种颜色分布的位置
+    private float[] shaderPositions;
 
 
     // 是否画边界线
@@ -91,6 +98,8 @@ public class XRadarView extends View {
     private boolean enabledRadius = true;
     // 是否绘制文本
     private boolean enabledText = true;
+    // 是否将雷达区域绘制成渐变色
+    private boolean enabledRegionShader = false;
 
 
     private int MAX_TEXT_WIDTH;  // 文字最大允许宽度
@@ -103,6 +112,12 @@ public class XRadarView extends View {
     private int centerY;
     // 半径
     private float radius;
+
+    // 外轮廓是否是圆形
+    private boolean isCircle = false;
+
+    // 区域渐变shader
+    private Shader regionShader;
 
     private Paint cobwebPaint;
     private Paint linePaint;
@@ -258,6 +273,13 @@ public class XRadarView extends View {
         setMeasuredDimension(Math.min(wSpecSize, hSpecSize), Math.min(wSpecSize, hSpecSize));
     }
 
+    @Override
+    protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
+        super.onLayout(changed, left, top, right, bottom);
+        if (regionShader == null && shaderColors != null) {
+            regionShader = new LinearGradient(getLeft(), getTop(), getRight(), getBottom(), shaderColors, shaderPositions, Shader.TileMode.CLAMP);
+        }
+    }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
@@ -278,7 +300,7 @@ public class XRadarView extends View {
             drawText(canvas);
         }
         if (colors == null || colors.length == 0) {
-            drawRegion(canvas);
+            drawRegion(canvas, currentScale);
         } else {
             drawRegionWithColor(canvas, currentScale);
         }
@@ -336,22 +358,25 @@ public class XRadarView extends View {
         for (int i = layerCount; i >= 1; i--) {
             float curR = r * i;
             path.reset();
-            for (int j = 0; j < count; j++) {
-                if (j == 0) {
-                    path.moveTo(centerX, centerY - curR);
-                } else {
-                    path.lineTo((float) (centerX + Math.cos(angle * j + Math.PI / 2) * curR), (float) (centerY - Math.sin(angle * j + Math.PI / 2) * curR));
+            if (isCircle) {
+                path.addCircle(centerX, centerY, curR, Path.Direction.CW);
+            } else {
+                for (int j = 0; j < count; j++) {
+                    if (j == 0) {
+                        path.moveTo(centerX, centerY - curR);
+                    } else {
+                        path.lineTo((float) (centerX + Math.cos(angle * j + Math.PI / 2) * curR), (float) (centerY - Math.sin(angle * j + Math.PI / 2) * curR));
+                    }
                 }
-
+                path.close();
             }
-            path.close();
             canvas.drawPath(path, cobwebPaint);
         }
     }
 
     // 画 各层的颜色
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    private void drawLayer(Canvas canvas,int startColor,int endColor) {
+    private void drawLayer(Canvas canvas, int startColor, int endColor) {
         Path path = null;
         Path prePath = null;
         float r = radius / layerCount;
@@ -359,13 +384,17 @@ public class XRadarView extends View {
             float curR = r * i;
             path = new Path();
             for (int j = 0; j < count; j++) {
-                if (j == 0) {
-                    path.moveTo(centerX, centerY - curR);
+                if (isCircle) {
+                    path.addCircle(centerX, centerY, curR, Path.Direction.CW);
                 } else {
-                    path.lineTo((float) (centerX + Math.cos(angle * j + Math.PI / 2) * curR), (float) (centerY - Math.sin(angle * j + Math.PI / 2) * curR));
+                    if (j == 0) {
+                        path.moveTo(centerX, centerY - curR);
+                    } else {
+                        path.lineTo((float) (centerX + Math.cos(angle * j + Math.PI / 2) * curR), (float) (centerY - Math.sin(angle * j + Math.PI / 2) * curR));
+                    }
                 }
-
             }
+
             if (prePath != null) {
                 if (i != 0) {
                     prePath.op(path, Path.Op.DIFFERENCE);
@@ -472,13 +501,19 @@ public class XRadarView extends View {
     }
 
     // 用一种颜色画区域
-    private void drawRegion(Canvas canvas) {
+    private void drawRegion(Canvas canvas, float scale) {
+        canvas.save();
         singlePaint.setColor(singleColor);
+        if (enabledRegionShader) {
+            singlePaint.setShader(regionShader);
+        } else {
+            singlePaint.setShader(null);
+        }
         List<Point> list = new ArrayList<>();
         for (int i = 0; i < count; i++) {
             int x, y;
-            x = (int) (centerX + percents[i] * radius * Math.cos(angle * i + Math.PI / 2));
-            y = (int) (centerY - percents[i] * radius * Math.sin(angle * i + Math.PI / 2));
+            x = (int) (centerX + scale * percents[i] * radius * Math.cos(angle * i + Math.PI / 2));
+            y = (int) (centerY - scale * percents[i] * radius * Math.sin(angle * i + Math.PI / 2));
             Point p = new Point();
             p.set(x, y);
             list.add(p);
@@ -494,10 +529,12 @@ public class XRadarView extends View {
         }
         path.close();
         canvas.drawPath(path, singlePaint);
+        canvas.restore();
     }
 
     // 多种颜色画区域
     private void drawRegionWithColor(Canvas canvas, float scale) {
+        canvas.save();
         int colorSize = colors.length;
         List<Point> list = new ArrayList<>();
         for (int i = 0; i < count; i++) {
@@ -528,6 +565,7 @@ public class XRadarView extends View {
         path.close();
         dataPaint.setColor(colors[(list.size() - 1) % colorSize]);
         canvas.drawPath(path, dataPaint);
+        canvas.restore();
     }
 
     // 画 多行文字
@@ -860,6 +898,19 @@ public class XRadarView extends View {
         invalidate();
     }
 
+    public int[] getColors() {
+        return colors;
+    }
+
+    public boolean isCircle() {
+        return isCircle;
+    }
+
+    public void setCircle(boolean circle) {
+        isCircle = circle;
+        invalidate();
+    }
+
     public boolean isEnabledShade() {
         return enabledShade;
     }
@@ -895,5 +946,43 @@ public class XRadarView extends View {
         this.singleColor = singleColor;
         singlePaint.setColor(singleColor);
         invalidate();
+    }
+
+    public void setRegionShaderConfig(int colors[], float positions[]) {
+        this.shaderColors = colors;
+        this.shaderPositions = positions;
+        requestLayout();
+        invalidate();
+    }
+
+    public void setEnabledRegionShader(boolean enabled) {
+        this.enabledRegionShader = enabled;
+        requestLayout();
+        invalidate();
+    }
+
+    public RectF getPathRect() {
+        List<Point> list = new ArrayList<>();
+        for (int i = 0; i < count; i++) {
+            int x, y;
+            x = (int) (centerX + percents[i] * radius * Math.cos(angle * i + Math.PI / 2));
+            y = (int) (centerY - percents[i] * radius * Math.sin(angle * i + Math.PI / 2));
+            Point p = new Point();
+            p.set(x, y);
+            list.add(p);
+        }
+
+        Path path = new Path();
+        for (int i = 0; i < list.size(); i++) {
+            if (i == 0) {
+                path.moveTo(list.get(i).x, list.get(i).y);
+            } else {
+                path.lineTo(list.get(i).x, list.get(i).y);
+            }
+        }
+        path.close();
+        RectF rect = new RectF();
+        path.computeBounds(rect, true);
+        return rect;
     }
 }
