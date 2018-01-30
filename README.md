@@ -6,7 +6,7 @@ Lastest Version:
 
 ## 更新日志
 
-### 1.0.4 更新内容
+### 1.0.4版本 更新内容
 1. 支持圆形轮廓
 2. 支持区域颜色渐变
 以上更新感谢 [leixiong033](https://github.com/leixiong033)、[wl386123298](https://github.com/wl386123298) 提出的[issue](https://github.com/hust201010701/XRadarView/issues/1) .
