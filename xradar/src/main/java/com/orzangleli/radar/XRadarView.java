@@ -73,7 +73,7 @@ public class XRadarView extends View {
     // 边界线颜色
     private int borderColor;
     // 边界线的宽度
-    private int borderWidth;
+    private int boundaryWidth;
     // 半径线的颜色
     private int radiusColor;
     // 雷达图渐变颜色数组
@@ -176,7 +176,7 @@ public class XRadarView extends View {
         pointColor = typedArray.getColor(R.styleable.XRadarView_pointColor, Color.parseColor("#80333366"));
         borderColor = typedArray.getColor(R.styleable.XRadarView_borderColor, Color.parseColor("#80333366"));
         radiusColor = typedArray.getColor(R.styleable.XRadarView_radiusColor, Color.parseColor("#80CCCCCC"));
-        borderWidth = typedArray.getDimensionPixelSize(R.styleable.XRadarView_borderWidth, 5);
+        boundaryWidth = typedArray.getDimensionPixelSize(R.styleable.XRadarView_boundaryWidth, 5);
 
         pointRadius = typedArray.getDimensionPixelSize(R.styleable.XRadarView_pointRadius, 10);
         enabledBorder = typedArray.getBoolean(R.styleable.XRadarView_enabledBorder, false);
@@ -240,7 +240,7 @@ public class XRadarView extends View {
         borderPaint.setStyle(Paint.Style.FILL_AND_STROKE);
         borderPaint.setAntiAlias(true);
         borderPaint.setColor(borderColor);
-        borderPaint.setStrokeWidth(borderWidth);
+        borderPaint.setStrokeWidth(boundaryWidth);
 
 
         loadAnimation(enabledAnimation);
@@ -881,12 +881,12 @@ public class XRadarView extends View {
         invalidate();
     }
 
-    public int getBorderWidth() {
-        return borderWidth;
+    public int getBoundaryWidth() {
+        return boundaryWidth;
     }
 
-    public void setBorderWidth(int borderWidth) {
-        this.borderWidth = borderWidth;
+    public void setBoundaryWidth(int boundaryWidth) {
+        this.boundaryWidth = boundaryWidth;
     }
 
     public boolean isEnabledPolygon() {

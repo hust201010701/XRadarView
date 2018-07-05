@@ -19,7 +19,7 @@
         <attr name="pointColor" format="color|reference" />
         <attr name="borderColor" format="color|reference" />
         <attr name="radiusColor" format="color|reference" />
-        <attr name="borderWidth" format="dimension|reference" />
+        <attr name="boundaryWidth" format="dimension|reference" />
         <attr name="pointRadius" format="dimension|reference" />
         <attr name="enabledBorder" format="boolean"/>
         <attr name="enabledAnimation" format="boolean"/>

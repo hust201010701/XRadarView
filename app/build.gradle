@@ -26,8 +26,8 @@ dependencies {
     })
     compile 'com.android.support:appcompat-v7:25.3.1'
     testCompile 'junit:junit:4.12'
-//    compile project(':xradar')
-    compile 'com.orzangleli:xradar:1.0.4'
+    compile project(':xradar')
+//    compile 'com.orzangleli:xradar:1.0.5'
 }
 
 

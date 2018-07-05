@@ -3,7 +3,10 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/RadarView.iml" filepath="$PROJECT_DIR$/RadarView.iml" />
+      <module fileurl="file://$PROJECT_DIR$/XRadarView.iml" filepath="$PROJECT_DIR$/XRadarView.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/xradar/xradar.iml" filepath="$PROJECT_DIR$/xradar/xradar.iml" />
       <module fileurl="file://$PROJECT_DIR$/xradar/xradar.iml" filepath="$PROJECT_DIR$/xradar/xradar.iml" />
     </modules>
   </component>

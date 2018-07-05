@@ -269,10 +269,8 @@ public class MainActivity extends AppCompatActivity implements CompoundButton.On
                 break;
             case R.id.drawIcon:
                 if (isChecked) {
-                    radarView.setEnabledRegionShader(false);
                     radarView.setDrawables(drawables);
                 } else {
-                    radarView.setEnabledRegionShader(true);
                     radarView.setDrawables(null);
                 }
                 break;

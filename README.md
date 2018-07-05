@@ -6,6 +6,12 @@ Lastest Version:
 
 ## 更新日志
 
+### 1.0.5 版本 更新内容
+
+修复Issues 与material design冲突问题。
+
+请注意此版本之后，边界线宽度使用`boundaryWidth`指定。
+
 ### 1.0.4版本 更新内容
 1. 支持圆形轮廓
 2. 支持区域颜色渐变
@@ -37,7 +43,7 @@ XRadarView 支持高度自定义，其可调整属性及含义如下表所示。
 |pointColor|圆点颜色|
 |pointRadius|圆点半径大小|
 |borderColor|边界线颜色|
-|borderWidth|边界线的宽度|
+|boundaryWidth|边界线的宽度|
 |radiusColor|半径线的颜色|
 |enabledBorder|是否画边界线|
 |enabledAnimation|是否开启动画|

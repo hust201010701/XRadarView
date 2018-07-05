@@ -18,7 +18,7 @@
         app:count="7"
         app:enabledBorder="true"
         app:borderColor="#ff0000"
-        app:borderWidth="2dp"
+        app:boundaryWidth="2dp"
         app:radiusColor="#88D3D8"
         app:enabledShowPoint="false"
         app:layerCount="4"
