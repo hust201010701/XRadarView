@@ -2,7 +2,7 @@
 :bus: XRadarView is a "A highly customizable radar view for Android". XRadarView 是一个可高度自定义的雷达图控件。
 
 Lastest Version:      
-[ ![Download](https://api.bintray.com/packages/orzangleli/maven/xradar/images/download.svg?version=1.0.4) ](https://bintray.com/orzangleli/maven/xradar/1.0.4/link)
+[ ![Download](https://api.bintray.com/packages/orzangleli/maven/xradar/images/download.svg?version=1.0.5) ](https://bintray.com/orzangleli/maven/xradar/1.0.5/link)
 
 ## 更新日志
 
